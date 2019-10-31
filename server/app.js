@@ -10,7 +10,7 @@ const expressHandlebars = require('express-handlebars');
 const session = require('express-session');
 
 const RedisStore = require('connect-redis')(session);
-const url require('url');
+const url = require('url');
 const csrf = require('csurf');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
@@ -26,17 +26,16 @@ mongoose.connect(dbURL, (err) => {
 
 
 let redisURL = {
-  hostname: '', //hostname
-  port: , //port number
+  hostname: 'redis-13921.c82.us-east-1-2.ec2.cloud.redislabs.com', // hostname
+  port: '13921', //port number
 };
 
-let redisPass = ''; //password
+let redisPass = 'tU95Ua4vAWI4TRT0GPK1n95v7T8DTLZ0'; // password
 
 if (process.env.REDISCLOUD_URL) {
-   redisURL = url.parse(process.env.REDISCLOUD_URL); //process or proess
+  redisURL = url.parse(process.env.REDISCLOUD_URL); // process or proess
   redisPass = redisURL.auth.split(':')[1];
 }
-
 
 
 const router = require('./router.js');
@@ -73,7 +72,7 @@ app.use(cookieParser());
 app.use(csrf());
 app.use((err, req, res, next) => {
   if (err.code !== 'EBADCSRFTOKEN') return next(err);
-  
+
   console.log('Missing CSRF token');
   return false;
 });
