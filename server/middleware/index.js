@@ -5,7 +5,7 @@ const requireLogin = (req, res, next) => {
   return next;
 };
 
-const requiresLogout = (req, res, next) => {
+const requireLogout = (req, res, next) => {
   if (req.session.account) {
     return res.redirect('/maker');
   }
@@ -14,7 +14,7 @@ const requiresLogout = (req, res, next) => {
 
 const requireSecure = (req, res, next) => {
   if (req.headers['x-forwarded-proto'] !== 'https') {
-    return res.redirect(`https:\\${req.hostname}${req.url}`)
+    return res.redirect(`https:\\${req.hostname}${req.url}`);
   }
   return next();
 };
@@ -23,11 +23,11 @@ const bypassSecure = (req, res, next) => {
   next();
 };
 
-module.exports.requiresLogin = requiresLogin;
-module.exports.requiresLogout = requiresLogout;
+module.exports.requireLogin = requireLogin;
+module.exports.requireLogout = requireLogout;
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.requiresSecure = requiresSecure;
+  module.exports.requireSecure = requireSecure;
 } else {
-  module.exports.requiresSecure = bypassSecure;
+  module.exports.requireSecure = bypassSecure;
 }
