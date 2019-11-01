@@ -2,7 +2,7 @@ const requireLogin = (req, res, next) => {
   if (!req.session.account) {
     return res.redirect('/');
   }
-  return next;
+  return next();
 };
 
 const requireLogout = (req, res, next) => {
